@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
+import { Hero } from './hero-detail/hero';
 
-export class Hero {
-  id: number;
-  name: string;
-}
+
 
 const HEROES: Hero[] = [
   { id: 11, name: 'Mr. Nice' },
@@ -35,16 +33,7 @@ const HEROES: Hero[] = [
         </li>
       </ul>
     </div>
-    
-    <div class="showHeroDetails" *ngIf="selectedHero">
-      <h2>{{selectedHero.name}} details!</h2>
-      <div><label>id: </label>{{selectedHero.id}}</div>
-      <div><label>name: </label>{{selectedHero.name}}</div>
-      <div>
-        <label>name: </label>
-        <input id="heroname" type="text" class="form-control" name="selectedHero.name" placeholder="hero's name" [(ngModel)]="selectedHero.name" required>
-      </div>
-    </div>
+    <app-hero-detail [hero]="selectedHero"></app-hero-detail>
     `
 })
 export class AppComponent {
