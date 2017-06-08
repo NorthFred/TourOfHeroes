@@ -1,25 +1,12 @@
 import { Component } from '@angular/core';
 import { Hero } from './hero-detail/hero';
-
-
-
-const HEROES: Hero[] = [
-  { id: 11, name: 'Mr. Nice' },
-  { id: 12, name: 'Narco' },
-  { id: 13, name: 'Bombasto' },
-  { id: 14, name: 'Celeritas' },
-  { id: 15, name: 'Magneta' },
-  { id: 16, name: 'RubberMan' },
-  { id: 17, name: 'Dynama' },
-  { id: 18, name: 'Dr IQ' },
-  { id: 19, name: 'Magma' },
-  { id: 20, name: 'Tornado' }
-];
+import { HeroserviceService } from './services/heroservice.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [HeroserviceService],        // Providers is needed
   template: `
     <h1>{{title}}</h1>
     <h2>Overview of heroes</h2>
@@ -42,9 +29,10 @@ export class AppComponent {
   // hero: Hero;                    //--> Obsolete
   selectedHero: Hero;
 
-  heroes = HEROES;
+  heroes: Hero[];                 // Our data will come here.  Initializing an empty array.
 
-  constructor() {
+  // Injection of the service
+  constructor(private heroService: HeroserviceService) {
   
   // Set the initial properties
   this.title = 'Tour of Heroes';
@@ -52,6 +40,12 @@ export class AppComponent {
     id: 1,
     name: 'Fred the Horrible'
   }*/
+
+  this.heroes = this.heroService.getHeroes();
+
+*****CONTINUE FROM HERE: ngOnInit lifecycle hook
+  https://angular.io/docs/ts/latest/tutorial/toh-pt4.html
+
   }
 
   onSelect(hero: Hero) {
