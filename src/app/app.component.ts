@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Hero } from './hero-detail/hero';
 import { HeroserviceService } from './services/heroservice.service';
+
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,7 @@ import { HeroserviceService } from './services/heroservice.service';
     <app-hero-detail [hero]="selectedHero"></app-hero-detail>
     `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   title: string;
   // hero: Hero;                    //--> Obsolete
@@ -41,11 +42,22 @@ export class AppComponent {
     name: 'Fred the Horrible'
   }*/
 
-  this.heroes = this.heroService.getHeroes();
+  // Do not use data import in the constructor, rather use the ngOnInit method!
+  // this.heroes = this.heroService.getHeroes();
+}
 
-*****CONTINUE FROM HERE: ngOnInit lifecycle hook
-  https://angular.io/docs/ts/latest/tutorial/toh-pt4.html
+  // Since we added a Promise to the service, the heroes is return as a Promise, which we have to act upon
 
+  getHeroes(): void {
+    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+    //this.heroService.getHeroesSlowly().then(heroes => this.heroes = heroes);    // Simulate slow connection
+  }
+
+  ngOnInit(): void {
+
+    //this.heroes = this.heroService.getHeroes();
+    this.getHeroes();
+  
   }
 
   onSelect(hero: Hero) {
